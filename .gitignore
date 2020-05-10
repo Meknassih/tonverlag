@@ -105,3 +105,6 @@ dist
 
 # Client uploaded files
 uploads/
+
+# Database configuration file
+db/config.js

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const db = require('../db/db');
 
 var multer = require('multer');
 var storage = multer.diskStorage({
@@ -22,9 +23,6 @@ router.get('/', function (req, res, next) {
 
 /* POST to upload file and return validation page */
 router.post('/', upload.single('audioFile'), function (req, res, next) {
-  console.log('BODY : ' + JSON.stringify(req.body));
-  console.log(req.file);
-  console.log(req.body);
   if (!req.file) {
     res.status(400);
     return res.render('uploadView', {
@@ -49,6 +47,14 @@ router.post('/', upload.single('audioFile'), function (req, res, next) {
       }
     });
   }
+
+  // TODO: test request to be removed
+  db.query('SELECT NOW()', (err, response) => {
+    if (err)
+      console.log('PG ERR' + JSON.stringify(err));
+    else
+      console.log('PG RESPONSE' + JSON.stringify(response));
+  });
 
   res.status(201);
   res.render('uploadView', {
