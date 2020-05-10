@@ -17,19 +17,49 @@ const acceptedMimeTypes = [
 
 /* GET upload page. */
 router.get('/', function (req, res, next) {
-  res.render('uploadView', { title: 'Tonverlag' });
+  res.render('uploadView');
 });
 
+/* POST to upload file and return validation page */
 router.post('/', upload.single('audioFile'), function (req, res, next) {
   console.log('BODY : ' + JSON.stringify(req.body));
   console.log(req.file);
   console.log(req.body);
-  if (!req.file)
-    return res.status(400).send('Missing audio file.');
-  if (acceptedMimeTypes.findIndex(type => type == req.file.mimetype) === -1)
-    return res.status(400).send('Unsupported audio file. Supported : ' + JSON.stringify(acceptedMimeTypes));
+  if (!req.file) {
+    res.status(400);
+    return res.render('uploadView', {
+      locals: {
+        title: 'Tonverlag',
+        notification: {
+          type: 'danger',
+          message: `You must select an audio file.`
+        }
+      }
+    });
+  }
+  if (acceptedMimeTypes.findIndex(type => type == req.file.mimetype) === -1) {
+    res.status(400);
+    return res.render('uploadView', {
+      locals: {
+        title: 'Tonverlag',
+        notification: {
+          type: 'danger',
+          message: 'Unsupported audio file. Supported : ' + JSON.stringify(acceptedMimeTypes)
+        }
+      }
+    });
+  }
 
-  res.status(201).send('Saved ' + req.file.originalname);
+  res.status(201);
+  res.render('uploadView', {
+    locals: {
+      title: 'Tonverlag',
+      notification: {
+        type: 'success',
+        message: `Your new track ${req.file.originalname} has been saved.`
+      }
+    }
+  });
 });
 
 module.exports = router;
