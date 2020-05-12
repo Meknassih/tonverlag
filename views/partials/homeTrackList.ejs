@@ -4,8 +4,10 @@
         <%= tracks[index].displayName %>
     </div>
     <div class="card-body">
+        <span id="trackFilename"></span>
         <h5 class="card-title">Special title treatment</h5>
         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a class="btn btn-success btn-play" data-filename="<%= tracks[index].fileName %>">Play</a>
         <a href="#" class="btn btn-secondary">Share</a>
     </div>
     <div class="card-footer text-muted">
