@@ -14,3 +14,23 @@ div.card-track {
 div.card-body {
   text-align: left;
 }
+
+div.player {
+  position: sticky;
+  bottom: 0;
+  background-color: #242a29;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+div.player > .controls {
+  flex-grow: 1;
+}
+
+div#waveform {
+  flex-basis: 100%;
+  flex-grow: 1;
+}

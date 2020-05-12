@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../db/db');
+const globals = require('../globals');
 
 var multer = require('multer');
 var storage = multer.diskStorage({
-  destination: 'uploads/',
+  destination: globals.uploadsFolder,
   filename: function (req, file, cb) {
     cb(null, Date.now() + '_' + file.originalname);
   }

@@ -38,7 +38,13 @@
       </div>
     </div>
   </div>
-  <div id="waveform"></div>
+  <div class="player">
+    <div class="controls">
+      <button class="btn btn-secondary btn-play" disabled="true">PLAY</button>
+    </div>
+    <div id="waveform"></div>
+  </div>
+
 </body>
 <%- include('partials/vendorscriptsView', {});  %>
 <script src="https://unpkg.com/wavesurfer.js@3.3.3/dist/wavesurfer.js"></script>

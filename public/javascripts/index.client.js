@@ -1,18 +1,33 @@
 $(function () {
-    var wavesurfer = WaveSurfer.create({
+    let firstLoad = true;
+    const wavesurfer = WaveSurfer.create({
         container: 'div#waveform',
-        barWidth: 1
+        barWidth: 3,
+        responsive: true,
+        progressColor: '#007bff',
+        backgroundColor: '#242a29',
+        cursorColor: '#d2d9e1',
+        skipLength: 10
     });
+
+    wavesurfer.load(window.location.origin + '/track?filename=' + $('.btn-play').get(0).dataset.filename);
 
     wavesurfer.on('ready', function () {
-        wavesurfer.play();
+        // Ignore first load because it is done automatically when accessing the page
+        if (firstLoad)
+            firstLoad = false;
+        else
+            wavesurfer.play();
+
+        $('.controls > .btn-play').removeAttr('disabled');
     });
 
-    $('.btn-play').on('click', (event) => {
+    $('.card-track .btn-play').on('click', (event) => {
         console.log('loading audio', event.target.dataset.filename);
-        $.get(window.location.origin + '/track?filename=' + event.target.dataset.filename, (response) => {
-            console.log(response);
-            wavesurfer.load(audioUrl);
-        });
-    })
+        wavesurfer.load(window.location.origin + '/track?filename=' + event.target.dataset.filename);
+    });
+
+    $('.controls > .btn-play').on('click', () => {
+        wavesurfer.playPause();
+    });
 });
