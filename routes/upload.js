@@ -49,23 +49,37 @@ router.post('/', upload.single('audioFile'), function (req, res, next) {
   }
 
   // TODO: test request to be removed
-  db.query('SELECT NOW()', (err, response) => {
-    if (err)
-      console.log('PG ERR' + JSON.stringify(err));
-    else
-      console.log('PG RESPONSE' + JSON.stringify(response));
-  });
-
-  res.status(201);
-  res.render('uploadView', {
-    locals: {
-      title: 'Tonverlag',
-      notification: {
-        type: 'success',
-        message: `Your new track ${req.file.originalname} has been saved.`
+  db.query(`INSERT INTO public."Track"(
+    id, "fileName", "updatedAt", "createdAt", "listenCount", "userId")
+    VALUES (DEFAULT, $1, DEFAULT, DEFAULT, 0, $2)`,
+    [req.file.filename, undefined],
+    (err, response) => {
+      if (err) {
+        console.error('PG ' + JSON.stringify(err));
+        res.status(500);
+        res.render('uploadView', {
+          locals: {
+            title: 'Tonverlag',
+            notification: {
+              type: 'danger',
+              message: `Your track ${req.file.originalname} could not be saved.`
+            }
+          }
+        });
+      } else {
+        console.log('PG ' + JSON.stringify(response));
+        res.status(201);
+        res.render('uploadView', {
+          locals: {
+            title: 'Tonverlag',
+            notification: {
+              type: 'success',
+              message: `Your new track ${req.file.originalname} has been saved.`
+            }
+          }
+        });
       }
-    }
-  });
+    });
 });
 
 module.exports = router;
