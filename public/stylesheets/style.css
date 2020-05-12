@@ -20,6 +20,9 @@ div.player {
   bottom: 0;
   background: rgb(36,42,41);
   background: linear-gradient(0deg, rgba(36,42,41,1) 0%, rgba(69,69,69,1) 100%); 
+}
+
+div.player .controls-and-waveform {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -27,19 +30,38 @@ div.player {
   align-items: center;
 }
 
-div.player > .controls {
+div.player .controls {
   flex-grow: 1;
-  padding: 1vw;
+  padding: 1vw 2vh;
 }
 
 div.player .loading {
   font-weight: bold;
   position: absolute;
   left: 50%;
+  top: 45%;
 }
 
-div#waveform {
+div.player #waveform {
   flex-basis: 100%;
   flex-grow: 1;
-  padding: 1% 0;
+  padding: 1vh 0;
 }
+
+div.player .information {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.5vh 2vw 0 2vw;
+}
+
+div.player .artist-and-title {
+  flex: 1 1 0px;
+}
+
+div.player .duration {
+  flex: 0 1 auto;
+}
+
