@@ -5,7 +5,7 @@ $(function () {
         barWidth: 3,
         responsive: true,
         progressColor: '#007bff',
-        backgroundColor: '#242a29',
+        // backgroundColor: '#242a29',
         cursorColor: '#d2d9e1',
         skipLength: 10
     });
@@ -20,6 +20,12 @@ $(function () {
             wavesurfer.play();
 
         $('.controls > .btn-play').removeAttr('disabled');
+        $('.player .loading').html('');
+    });
+
+    wavesurfer.on('loading', function (progress) {
+        $('.controls > .btn-play').attr('disabled', true);
+        $('.player .loading').html(`<div class="text-light text-center">Loading: ${progress}</div>`);
     });
 
     $('.card-track .btn-play').on('click', (event) => {

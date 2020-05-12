@@ -18,7 +18,8 @@ div.card-body {
 div.player {
   position: sticky;
   bottom: 0;
-  background-color: #242a29;
+  background: rgb(36,42,41);
+  background: linear-gradient(0deg, rgba(36,42,41,1) 0%, rgba(69,69,69,1) 100%); 
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -28,9 +29,17 @@ div.player {
 
 div.player > .controls {
   flex-grow: 1;
+  padding: 1vw;
+}
+
+div.player .loading {
+  font-weight: bold;
+  position: absolute;
+  left: 50%;
 }
 
 div#waveform {
   flex-basis: 100%;
   flex-grow: 1;
+  padding: 1% 0;
 }
