@@ -23,7 +23,7 @@ $(function () {
         else
             wavesurfer.play();
 
-        $('.player .duration').html(secondsToTime(wavesurfer.getDuration()));
+        $('.player .duration').html(elapsedVsTotalTimeString(0, wavesurfer.getDuration()));
         $('.player .btn-play').removeAttr('disabled');
         $('.player .loading').html('');
     });
@@ -31,6 +31,10 @@ $(function () {
     wavesurfer.on('loading', function (progress) {
         $('.player .btn-play').attr('disabled', true);
         $('.player .loading').html(`<div class="text-light text-center">Loading: ${progress}</div>`);
+    });
+
+    wavesurfer.on('audioprocess', function () {
+        $('.player .duration').html(elapsedVsTotalTimeString(wavesurfer.getCurrentTime(), wavesurfer.getDuration()));
     });
 
     $('.card-track .btn-play').on('click', (event) => {
@@ -46,4 +50,8 @@ $(function () {
 
 function secondsToTime(seconds) {
     return new Date(1000 * seconds).toISOString().substr(14, 5);
+}
+
+function elapsedVsTotalTimeString(elapsedSeconds, totalSeconds) {
+    return `${secondsToTime(elapsedSeconds)} — ${secondsToTime(totalSeconds)}`;
 }
