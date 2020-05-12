@@ -48,11 +48,10 @@ router.post('/', upload.single('audioFile'), function (req, res, next) {
     });
   }
 
-  // TODO: test request to be removed
   db.query(`INSERT INTO public."Track"(
-    id, "fileName", "updatedAt", "createdAt", "listenCount", "userId")
-    VALUES (DEFAULT, $1, DEFAULT, DEFAULT, 0, $2)`,
-    [req.file.filename, undefined],
+    id, "fileName", "updatedAt", "createdAt", "listenCount", "displayName", "userId")
+    VALUES (DEFAULT, $1, DEFAULT, DEFAULT, 0, $2, $3)`,
+    [req.file.filename, req.file.originalname.replace(/\.[^/.]+$/, ""), undefined],
     (err, response) => {
       if (err) {
         console.error('PG ' + JSON.stringify(err));

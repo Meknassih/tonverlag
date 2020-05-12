@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+div.card-track {
+  margin-bottom: 2vh;
+}
+
+div.card-body {
+  text-align: left;
+}

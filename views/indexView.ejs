@@ -22,8 +22,24 @@
         </form>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm">
+        <% if (locals.tracks !== undefined && locals.tracks.length > 0) { %>
+        <%- include('partials/homeTrackList.ejs', {tracks: locals.tracks}) %>
+        <% } else if (locals.tracks !== undefined && locals.tracks.length == 0) { %>
+        <div class="alert alert-light" role="alert">
+          There are no tracks to show at the moment. Go ahead and <a href="upload">upload one</a>.
+        </div>
+        <% } else { %>
+        <div class="alert alert-danger" role="alert">
+          There was an issue retrieving the tracks. <a href="">Try again</a>?
+        </div>
+        <% } %>
+      </div>
+    </div>
   </div>
 </body>
 <%- include('partials/vendorscriptsView', {});  %>
+<script src="javascripts/index.client.js"></script>
 
 </html>

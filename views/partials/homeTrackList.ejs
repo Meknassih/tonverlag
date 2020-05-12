@@ -1,0 +1,21 @@
+<% for( let index = 0; index < tracks.length; index++ ) { %>
+<div class="card card-track text-center">
+    <div class="card-header">
+        <%= tracks[index].displayName %>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-secondary">Share</a>
+    </div>
+    <div class="card-footer text-muted">
+        <span>
+            Added <%= new Date(tracks[index].createdAt).toLocaleString() %>
+        </span>
+        |
+        <span>
+            Updated <%= new Date(tracks[index].updatedAt).toLocaleString() %>
+        </span>
+    </div>
+</div>
+<% } %>
