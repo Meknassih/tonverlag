@@ -1,34 +1,43 @@
-function handleFileSelect() {
-    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
-        alert('The File APIs are not fully supported in this browser.');
-        return;
-    }
+let formData;
 
-    var input = document.getElementById('fileInput');
-    if (!input) {
-        alert("Could not find the fileInput element.");
-    }
-    else if (!input.files) {
-        alert("This browser doesn't seem to support the `files` property of file inputs.");
-    }
-    else if (!input.files[0]) {
-        alert("Please select a file before clicking 'Load'");
-    }
-    else {
-        var file = input.files[0];
-        var fr = new FileReader();
-        fr.onload = (event) => {
-            console.log(event);
-            console.log($('#fileInput'));
-            $.post('/upload/send', { data: event.target.result, name: $('#fileInput').get(0).files[0].name },
-                function (err) {
-                    if (err) {
-                        console.error("Could not upload file : " + err);
-                    }
-                });
-        };
-        //fr.readAsText(file);
-        fr.readAsBinaryString(file); //as bit work with base64 for example upload to server
-        //fr.readAsDataURL(file);
-    }
+function onFileChange(event) {
+    $('#btnLoad').attr('disabled', true);
+
+    const wavesurfer = WaveSurfer.create({
+        container: 'div#waveform',
+        barWidth: 3,
+        responsive: true,
+        progressColor: '#007bff',
+        barGap: 2,
+        cursorColor: '#d2d9e1',
+    });
+
+    wavesurfer.on('ready', function () {
+        wavesurfer.exportImage('image/png', 0.7, 'blob').then((imageBlobArray) => {
+            const imageBlob = imageBlobArray[0];
+            formData = new FormData();
+            formData.append('audioFile', $('#fileInput').get(0).files[0], $('#fileInput').get(0).files[0].name);
+            formData.append('imageFile', imageBlob, `${Date.now()}_${$('#fileInput').get(0).files[0].name}.png`);
+            $('#btnLoad').removeAttr('disabled');
+        });
+    });
+    wavesurfer.load(URL.createObjectURL($('#fileInput').get(0).files[0]));
+}
+
+function submitTrack(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    $.post({
+        url: '/upload',
+        data: formData,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: (data, textStatus, jqXHR) => {
+            // TODO: show alert
+        },
+        error: (jqXHR, textStatus, error) => {
+            // TODO: show alert
+        }
+    });
 }

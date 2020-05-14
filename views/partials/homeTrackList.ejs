@@ -1,14 +1,10 @@
 <% for( let index = 0; index < tracks.length; index++ ) { %>
 <div class="card card-track text-center">
-    <div class="card-header">
-        <%= tracks[index].displayName %>
-    </div>
     <div class="card-body">
-        <span id="trackFilename"></span>
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a class="btn btn-success btn-play" data-filename="<%= tracks[index].fileName %>" data-displayname="<%= tracks[index].displayName %> ">Play</a>
-        <a href="#" class="btn btn-secondary">Share</a>
+        <h5 class="card-title"><%= tracks[index].displayName %></h5>
+        <!-- <p class="card-text text-secondary">Uploaded by </p> -->
+        <button class="btn btn-success btn-play" data-filename="<%= tracks[index].fileName %>" data-displayname="<%= tracks[index].displayName %> ">Play</button>
+        <button href="#" class="btn btn-secondary">Share</button>
     </div>
     <div class="card-footer text-muted">
         <span>

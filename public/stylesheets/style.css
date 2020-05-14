@@ -65,6 +65,10 @@ div.player .duration {
   flex: 0 1 auto;
 }
 
+div.card-track .card-text {
+  font-size: smaller;
+}
+
 div.footer {
   margin-top: 5vh;
   padding: 1vh 0;

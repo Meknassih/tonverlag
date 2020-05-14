@@ -23,8 +23,12 @@ router.get('/', function (req, res, next) {
 });
 
 /* POST to upload file and return validation page */
-router.post('/', upload.single('audioFile'), function (req, res, next) {
-  if (!req.file) {
+router.post('/', upload.fields([
+  { name: 'audioFile', maxCount: 1 },
+  { name: 'imageFile', maxCount: 1 }
+]), function (req, res, next) {
+  console.log(req.files);
+  if (req.files['audioFile'].length < 1) {
     res.status(400);
     return res.render('uploadView', {
       locals: {
@@ -36,7 +40,7 @@ router.post('/', upload.single('audioFile'), function (req, res, next) {
       }
     });
   }
-  if (acceptedMimeTypes.findIndex(type => type == req.file.mimetype) === -1) {
+  if (acceptedMimeTypes.findIndex(type => type == req.files['audioFile'][0].mimetype) === -1) {
     res.status(400);
     return res.render('uploadView', {
       locals: {
@@ -50,9 +54,14 @@ router.post('/', upload.single('audioFile'), function (req, res, next) {
   }
 
   db.query(`INSERT INTO public."Track"(
-    id, "fileName", "updatedAt", "createdAt", "listenCount", "displayName", "userId")
-    VALUES (DEFAULT, $1, DEFAULT, DEFAULT, 0, $2, $3)`,
-    [req.file.filename, req.file.originalname.replace(/\.[^/.]+$/, ""), undefined],
+    id, "fileName", "updatedAt", "createdAt", "listenCount", "displayName", "userId", "imageFileName")
+    VALUES (DEFAULT, $1, DEFAULT, DEFAULT, 0, $2, $3, $4)`,
+    [
+      req.files['audioFile'][0].filename,
+      req.files['audioFile'][0].originalname.replace(/\.[^/.]+$/, ""),
+      undefined,
+      req.files['imageFile'][0].filename
+    ],
     (err, response) => {
       if (err) {
         console.error('PG ' + JSON.stringify(err));
@@ -62,7 +71,7 @@ router.post('/', upload.single('audioFile'), function (req, res, next) {
             title: 'Tonverlag',
             notification: {
               type: 'danger',
-              message: `Your track ${req.file.originalname} could not be saved.`
+              message: `Your track ${req.files['audioFile'][0].originalname} could not be saved.`
             }
           }
         });
@@ -74,7 +83,7 @@ router.post('/', upload.single('audioFile'), function (req, res, next) {
             title: 'Tonverlag',
             notification: {
               type: 'success',
-              message: `Your new track ${req.file.originalname} has been saved.`
+              message: `Your new track ${req.files['audioFile'][0].originalname} has been saved.`
             }
           }
         });
