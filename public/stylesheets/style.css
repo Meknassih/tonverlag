@@ -7,6 +7,12 @@ a {
   color: #00B7FF;
 }
 
+.col-cta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 div.card-track {
   margin-bottom: 2vh;
 }
