@@ -5,27 +5,27 @@
     "icons": [
         {
             "src": "images/icons/Icon-48.png",
-            "sizes": "48x48",
+            "sizes": "48x41",
             "type": "image/png"
         },
         {
             "src": "images/icons/Icon-96.png",
-            "sizes": "96x96",
+            "sizes": "96x82",
             "type": "image/png"
         },
         {
             "src": "images/icons/Icon-144.png",
-            "sizes": "144x144",
+            "sizes": "144x123",
             "type": "image/png"
         },
         {
             "src": "images/icons/Icon-192.png",
-            "sizes": "192x192",
+            "sizes": "192x164",
             "type": "image/png"
         },
         {
             "src": "images/icons/Icon-512.png",
-            "sizes": "512x512",
+            "sizes": "512x437",
             "type": "image/png"
         }
     ],
