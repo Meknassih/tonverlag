@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
-    "clear:uploads": "rm -r ./uploads/*"
+    "clear:uploads": "rm -r ./uploads/*",
+    "clear:database": "node ./dev/dbscripts.js --truncate-tracks"
   },
   "dependencies": {
     "bootstrap-icons": "^1.0.0-alpha4",
