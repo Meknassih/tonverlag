@@ -85,3 +85,8 @@ div.footer {
   font-size: small;
 }
 
+img.waveform {
+  width: 100%;
+  max-height: 96px;
+}
+

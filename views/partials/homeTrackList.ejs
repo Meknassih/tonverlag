@@ -3,6 +3,9 @@
     <div class="card-body">
         <h5 class="card-title"><%= tracks[index].displayName %></h5>
         <!-- <p class="card-text text-secondary">Uploaded by </p> -->
+        <% if (tracks[index].imageFileName) { %>
+        <img class="waveform" src="<%= `/track/waveform?filename=${tracks[index].imageFileName}` %>" alt="Waveform unavailable">
+        <% } %>
         <button class="btn btn-success btn-play" data-filename="<%= tracks[index].fileName %>" data-displayname="<%= tracks[index].displayName %> ">Play</button>
         <button href="#" class="btn btn-secondary">Share</button>
     </div>
