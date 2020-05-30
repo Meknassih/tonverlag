@@ -62,8 +62,7 @@ function submitTrack(event) {
                 $('#notification').html(jqXHR.responseText);
             else
                 $('#notification').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                An unexpected error happened during upload.
-                Technical information : ${error}. ${jqXHR.responseText}.
+                An unexpected error happened during upload: ${error}.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
