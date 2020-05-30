@@ -27,29 +27,19 @@ router.post('/', upload.fields([
   { name: 'audioFile', maxCount: 1 },
   { name: 'imageFile', maxCount: 1 }
 ]), function (req, res, next) {
-  console.log(req.files);
-  if (req.files['audioFile'].length < 1) {
+  console.log(!req.files)
+  if (!req.files || req.files['audioFile'].length < 1) {
     res.status(400);
-    return res.render('uploadView', {
-      locals: {
-        title: 'Tonverlag',
-        notification: {
-          type: 'danger',
-          message: `You must select an audio file.`
-        }
-      }
+    return res.render('partials/successNotificationView', {
+      type: 'danger',
+      message: `You must select an audio file.`
     });
   }
   if (acceptedMimeTypes.findIndex(type => type == req.files['audioFile'][0].mimetype) === -1) {
     res.status(400);
-    return res.render('uploadView', {
-      locals: {
-        title: 'Tonverlag',
-        notification: {
-          type: 'danger',
-          message: 'Unsupported audio file. Supported : ' + JSON.stringify(acceptedMimeTypes)
-        }
-      }
+    return res.render('partials/successNotificationView', {
+      type: 'danger',
+      message: 'Unsupported audio file. Supported : ' + JSON.stringify(acceptedMimeTypes)
     });
   }
 
@@ -65,27 +55,16 @@ router.post('/', upload.fields([
     (err, response) => {
       if (err) {
         console.error('PG ' + JSON.stringify(err));
-        res.status(500);
-        res.render('uploadView', {
-          locals: {
-            title: 'Tonverlag',
-            notification: {
-              type: 'danger',
-              message: `Your track ${req.files['audioFile'][0].originalname} could not be saved.`
-            }
-          }
+        res.status(503);
+        res.render('partials/successNotificationView', {
+          type: 'danger',
+          message: `Your track ${req.files['audioFile'][0].originalname} could not be saved.`
         });
       } else {
-        console.log('PG ' + JSON.stringify(response));
         res.status(201);
-        res.render('uploadView', {
-          locals: {
-            title: 'Tonverlag',
-            notification: {
-              type: 'success',
-              message: `Your new track ${req.files['audioFile'][0].originalname} has been saved.`
-            }
-          }
+        res.render('partials/successNotificationView', {
+          type: 'success',
+          message: `Your new track ${req.files['audioFile'][0].originalname} has been saved.`
         });
       }
     });

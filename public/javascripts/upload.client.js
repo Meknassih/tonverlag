@@ -54,10 +54,20 @@ function submitTrack(event) {
         processData: false,
         contentType: false,
         success: (data, textStatus, jqXHR) => {
-            // TODO: show alert
+            $('#notification').html(data);
         },
         error: (jqXHR, textStatus, error) => {
-            // TODO: show alert
+            console.log(jqXHR, textStatus, error);
+            if ([400, 503].includes(jqXHR.status))
+                $('#notification').html(jqXHR.responseText);
+            else
+                $('#notification').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                An unexpected error happened during upload.
+                Technical information : ${error}. ${jqXHR.responseText}.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>`);
         }
     });
 }
